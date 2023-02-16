@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_map"
+    app:startDestination="@+id/navigation_today">
+
+    <fragment
+        android:id="@+id/navigation_today"
+        android:name="com.nvalenti.journalite.ui.items.TodayFragment"
+        android:label="@string/title_today"
+        tools:layout="@layout/fragment_today" />
+    <fragment
+        android:id="@+id/navigation_journal"
+        android:name="com.nvalenti.journalite.ui.history.JournalFragment"
+        android:label="@string/title_journal"
+        tools:layout="@layout/fragment_journal" />
+    <fragment
+        android:id="@+id/navigation_items"
+        android:name="com.nvalenti.journalite.ui.journal.ItemsFragment"
+        android:label="@string/title_items"
+        tools:layout="@layout/fragment_items" />
+</navigation>

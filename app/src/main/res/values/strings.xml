@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name" translatable="false">Journalite</string>
+    <string name="title_today">Today</string>
+    <string name="title_journal">Journal</string>
+    <string name="title_items">Items</string>
+</resources>
