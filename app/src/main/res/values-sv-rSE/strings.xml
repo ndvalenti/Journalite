@@ -3,4 +3,7 @@
     <string name="title_today">Idag</string>
     <string name="title_journal">Journal</string>
     <string name="title_items">Artikel</string>
+    <string name="title_locked">Låst</string>
+    <string name="title_register">Registrera</string>
+    <string name="unlock">Låsa upp</string>
 </resources>

@@ -3,4 +3,7 @@
     <string name="title_today">Today</string>
     <string name="title_journal">Journal</string>
     <string name="title_items">Items</string>
+    <string name="title_locked">Locked</string>
+    <string name="title_register">Register</string>
+    <string name="unlock">Unlock</string>
 </resources>

@@ -1,26 +1,28 @@
-package com.nvalenti.journalite.ui.history
+package com.nvalenti.journalite.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import com.nvalenti.journalite.R
-import com.nvalenti.journalite.databinding.FragmentJournalBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.nvalenti.journalite.MainViewModel
+import com.nvalenti.journalite.databinding.FragmentItemsBinding
 
-class JournalFragment : Fragment() {
-    private var _binding: FragmentJournalBinding? = null
+class ItemsFragment : Fragment() {
+    private var _binding: FragmentItemsBinding? = null
     private val binding get() = _binding!!
-    private val journalViewModel by viewModels<JournalViewModel>()
+
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentJournalBinding.inflate(inflater, container, false)
+        _binding = FragmentItemsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
 
         return root
     }
@@ -31,6 +33,6 @@ class JournalFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-       _binding = null
+        _binding = null
     }
 }
