@@ -21,17 +21,17 @@
         app:startDestination="@id/navigation_today">
         <fragment
             android:id="@+id/navigation_today"
-            android:name="com.nvalenti.journalite.ui.TodayFragment"
+            android:name="com.nvalenti.journalite.ui.today.TodayFragment"
             android:label="@string/title_today"
             tools:layout="@layout/fragment_today" />
         <fragment
             android:id="@+id/navigation_journal"
-            android:name="com.nvalenti.journalite.ui.JournalFragment"
+            android:name="com.nvalenti.journalite.ui.journal.JournalFragment"
             android:label="@string/title_journal"
             tools:layout="@layout/fragment_journal" />
         <fragment
             android:id="@+id/navigation_items"
-            android:name="com.nvalenti.journalite.ui.ItemsFragment"
+            android:name="com.nvalenti.journalite.ui.items.ItemsFragment"
             android:label="@string/title_items"
             tools:layout="@layout/fragment_items" />
     </navigation>

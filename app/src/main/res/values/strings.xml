@@ -6,4 +6,6 @@
     <string name="title_locked">Locked</string>
     <string name="title_register">Register</string>
     <string name="unlock">Unlock</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -15,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nvalenti.journalite.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    // TODO: Can this be moved to a fragment? Problems with AppCompatActivity and setupActionBarWithNavController, move what we can
     private lateinit var binding: ActivityMainBinding
     private val viewModel by viewModels<MainViewModel>()
     private lateinit var navController: NavController
