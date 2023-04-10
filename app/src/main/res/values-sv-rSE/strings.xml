@@ -6,4 +6,5 @@
     <string name="title_locked">Låst</string>
     <string name="title_register">Registrera</string>
     <string name="unlock">Låsa upp</string>
+    <string name="add_item">Lägg till</string>
 </resources>

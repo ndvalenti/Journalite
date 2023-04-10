@@ -1,14 +1,24 @@
 package com.nvalenti.journalite.controller
 
-import java.util.Date
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.time.LocalDateTime
 import java.util.UUID
 
-class JournalEntry {
-    var id = UUID.randomUUID()
-    var itemId = UUID.randomUUID()
+/**
+ * JournalEntries are individual entries spawned by a Task but tied only to an Item
+ * Once their task expires they are only modified when the Item title changes
+ */
 
-    lateinit var title: String
-    lateinit var date: Date
-    lateinit var entry: String
+@Entity(tableName = "journal_entry")
+data class JournalEntry(
+    @PrimaryKey var id: UUID,
+    @ColumnInfo(name="item_id") var itemId: UUID,
+    @ColumnInfo(name="due_date") var dueDate: LocalDateTime?,
+    var title: String?
+) {
+    @ColumnInfo(name="entry_date") var entryDate: LocalDateTime? = null
+    var entry: String? = null
     var rating: Int? = null
 }

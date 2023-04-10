@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!--
+    <LinearLayout
+        android:id="@+id/dayPicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemDetailTP">
+-->
+    <ToggleButton
+        android:id="@+id/monday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="M"
+        android:textOff="M"
+        android:textOn="M" />
+
+    <ToggleButton
+        android:id="@+id/tuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="T"
+        android:textOff="T"
+        android:textOn="T" />
+
+    <ToggleButton
+        android:id="@+id/wednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="W"
+        android:textOff="W"
+        android:textOn="W" />
+
+    <ToggleButton
+        android:id="@+id/thursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="T"
+        android:textOff="T"
+        android:textOn="T" />
+
+    <ToggleButton
+        android:id="@+id/friday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="F"
+        android:textOff="F"
+        android:textOn="F" />
+
+    <ToggleButton
+        android:id="@+id/saturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="S"
+        android:textOff="S"
+        android:textOn="S" />
+
+    <ToggleButton
+        android:id="@+id/sunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="S"
+        android:textOff="S"
+        android:textOn="S" />
+    <!--
+    </LinearLayout>
+-->
+</merge>

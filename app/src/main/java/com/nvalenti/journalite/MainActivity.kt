@@ -2,12 +2,10 @@ package com.nvalenti.journalite
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.view.*
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -16,57 +14,36 @@ import com.nvalenti.journalite.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModels<MainViewModel>()
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navigationBar
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigationHost) as NavHostFragment
-        navController = navHostFragment.navController
 
-        navController.addOnDestinationChangedListener {_, destination, _ ->
-            when(destination.id) {
-                R.id.navigation_lockscreen -> {
-                    navView.visibility = View.GONE
-                }
-                else -> {
-                    navView.visibility = View.VISIBLE
-                }
-            }
-        }
+        navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_today, R.id.navigation_journal, R.id.navigation_items, R.id.navigation_lockscreen
+                R.id.navigation_today, R.id.navigation_journal, R.id.navigation_items, R.id.navigation_item_detail
             )
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        observeAuthenticationState()
+        observeNavBarVisibility(navView)
     }
 
-    private fun observeAuthenticationState() {
-        viewModel.lockState.observe(this, Observer { lockState: MainViewModel.LockState ->
-            when (lockState) {
-                MainViewModel.LockState.LOCKED -> {
-                    navController.popBackStack()
-                    navController.navigate(R.id.navigation_lockscreen)
-                }
-                MainViewModel.LockState.UNREGISTERED -> {
-                    navController.navigate(R.id.navigation_register)
-                }
-                else -> {
-                    navController.popBackStack()
-                    navController.navigate(R.id.main_navigation)
-                }
+    private fun observeNavBarVisibility(navView: BottomNavigationView) {
+        MainViewModel.navBarVisible.observe(this) { visible ->
+            if (visible) {
+                navView.visibility = View.VISIBLE
+            } else {
+                navView.visibility = View.GONE
             }
-        })
+        }
     }
 }

@@ -1,50 +1,47 @@
 package com.nvalenti.journalite.ui.today
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nvalenti.journalite.R
 import com.nvalenti.journalite.controller.JournalTask
+import com.nvalenti.journalite.databinding.TodayRowBinding
 
-class TodayAdapter(journalTasks: List<JournalTask>) : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
-//class TodayAdapter(journalTasks: LiveData<List<JournalTask>>) : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val todayItemTitle: TextView
-        val todayItemTime: TextView
 
-        init {
-            todayItemTitle = view.findViewById(R.id.taskTitleTV)
-            todayItemTime = view.findViewById(R.id.taskTimeTV)
+class TodayAdapter(private val onItemClicked: (task: JournalTask) -> Unit) : ListAdapter<JournalTask, TodayAdapter.ViewHolder>(DiffCallback) {
+
+    inner class ViewHolder(private var binding: TodayRowBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(task: JournalTask) {
+            binding.taskTitleTV.text = task.title
+            binding.taskTimeTV.text = task.dueDate.toString()
         }
-    }
-
-    private val tasks: List<JournalTask>
-    init {
-        tasks = journalTasks
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.today_row, parent, false)
-
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(
+            TodayRowBinding.inflate(LayoutInflater.from(parent.context), parent,false)
+        )
+        viewHolder.itemView.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            onItemClicked(getItem(position))
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //holder.todayItemTitle.text = tasks.value?.get(position)?.title
-        //holder.todayItemTime.text = tasks.value?.get(position)?.date
-        holder.todayItemTitle.text = tasks[position].title
-        holder.todayItemTime.text = tasks[position].date
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        /*
-        tasks.value?.let {
-            return it.count()
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<JournalTask>() {
+            override fun areItemsTheSame(oldItem: JournalTask, newItem: JournalTask): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: JournalTask, newItem: JournalTask): Boolean {
+                return oldItem == newItem
+            }
         }
-        return 0
-         */
-        return tasks.count()
     }
 }

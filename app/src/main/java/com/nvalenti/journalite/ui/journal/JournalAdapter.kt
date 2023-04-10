@@ -1,47 +1,46 @@
 package com.nvalenti.journalite.ui.journal
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.nvalenti.journalite.R
 import com.nvalenti.journalite.controller.JournalEntry
+import com.nvalenti.journalite.databinding.JournalRowBinding
 
-class JournalAdapter(journalEntries: List<JournalEntry>): RecyclerView.Adapter<JournalAdapter.ViewHolder>() {
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val journalTitle: TextView
-        val journalDate: TextView
-        val journalRating: TextView
-        val journalBody: TextView
+class JournalAdapter : ListAdapter<JournalEntry, JournalAdapter.ViewHolder>(DiffCallback) {
 
-        init {
-            journalTitle = view.findViewById(R.id.journalTitleTV)
-            journalDate = view.findViewById(R.id.journalDateTV)
-            journalRating = view.findViewById(R.id.journalRatingTV)
-            journalBody = view.findViewById(R.id.journalBodyTV)
+    inner class ViewHolder(private var binding: JournalRowBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(entry: JournalEntry) {
+            binding.journalTitleTV.text = entry.title
+            binding.journalDateTV.text = entry.entryDate.toString()
+            binding.journalBodyTV.text = entry.entry
         }
     }
 
-    private val entries: List<JournalEntry>
-    init {
-        entries = journalEntries
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.journal_row, parent, false)
-
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(
+            JournalRowBinding.inflate(LayoutInflater.from(parent.context), parent,false)
+        )
+        viewHolder.itemView.setOnClickListener {
+            val position = viewHolder.adapterPosition
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.journalTitle.text = entries[position].title
-        holder.journalBody.text = entries[position].entry
-        holder.journalRating.text = entries[position].rating.toString()
-        holder.journalDate.text = entries[position].date.toString()
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return entries.count()
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<JournalEntry>() {
+            override fun areItemsTheSame(oldItem: JournalEntry, newItem: JournalEntry): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: JournalEntry, newItem: JournalEntry): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

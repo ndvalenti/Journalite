@@ -5,18 +5,6 @@
     android:id="@+id/nav_map"
     app:startDestination="@id/main_navigation">
 
-    <fragment
-        android:id="@+id/navigation_lockscreen"
-        android:name="com.nvalenti.journalite.user.LockScreenFragment"
-        android:label="@string/title_locked"
-        tools:layout="@layout/fragment_lockscreen" />
-
-    <fragment
-        android:id="@+id/navigation_register"
-        android:name="com.nvalenti.journalite.user.LockScreenFragment"
-        android:label="@string/title_register"
-        tools:layout="@layout/fragment_register" />
-
     <navigation android:id="@+id/main_navigation"
         app:startDestination="@id/navigation_today">
         <fragment
@@ -34,5 +22,20 @@
             android:name="com.nvalenti.journalite.ui.items.ItemsFragment"
             android:label="@string/title_items"
             tools:layout="@layout/fragment_items" />
+        <action
+            android:id="@+id/action_global_itemDetailFragment"
+            app:destination="@id/navigation_item_detail" />
     </navigation>
+    <fragment
+        android:id="@+id/navigation_item_detail"
+        android:name="com.nvalenti.journalite.ui.items.ItemDetailFragment"
+        android:label="Add Journal Item"
+        tools:layout="@layout/fragment_item_detail">
+        <argument
+            android:name="uuid"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/action_navigation_item_detail_to_main_navigation"
+            app:destination="@id/main_navigation" />
+    </fragment>
 </navigation>
