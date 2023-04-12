@@ -3,13 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/journalite_dark_grey"
-    android:paddingBottom="?attr/actionBarSize"
-    tools:context=".ui.items.ItemsFragment">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/itemsHeaderCL"
+        android:id="@+id/journalBlockHeaderCV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,58 +19,43 @@
 
 
         <TextView
-            android:id="@+id/itemsHeaderTV"
+            android:id="@+id/journalBlockDayTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Active Items"
             android:textColor="@color/journalite_light_grey"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/journalBlockHeaderCV"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Day" />
 
         <TextView
-            android:id="@+id/notifHeaderTV"
+            android:id="@+id/journalBlockDateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Notification"
             android:textColor="@color/journalite_light_grey"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/journalBlockHeaderCV"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/itemsRV"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_bottom"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@+id/itemsAddFAB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemsHeaderCL"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/itemsAddFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:src="@drawable/baseline_add_circle_outline_24"
-        app:backgroundTint="@color/journalite_secondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/journalBlockHeaderCV"
+        android:background="@drawable/rounded_bottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

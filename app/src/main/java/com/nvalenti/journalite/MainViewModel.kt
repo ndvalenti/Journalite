@@ -168,6 +168,7 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
         blocks.forEach { block ->
             items.forEach { item ->
                 if (isInInterval(item, block)) {
+                    // TODO: make sure that we are adding unique tasks on unique dates
                     addUniqueTaskFromItem(item, block.date)
                 }
             }
@@ -180,10 +181,10 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
         //_journalTasks.filter { it.dueDate < staleTime }.forEach { task ->
         tasks.filter { it.dueDate < staleTime }.forEach { task ->
             if (task.hasEntry) {
+                removeList.add(task)
+            } else {
                 task.isStale = true
                 updateList.add(task)
-            } else {
-                removeList.add(task)
             }
         }
 

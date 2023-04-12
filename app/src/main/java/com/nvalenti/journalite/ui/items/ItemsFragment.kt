@@ -47,8 +47,9 @@ class ItemsFragment : Fragment() {
         recyclerView.adapter = itemsAdapter
 
         lifecycle.coroutineScope.launch {
-            viewModel.journalItems().collect {
-                itemsAdapter.submitList(it)
+            viewModel.journalItems().collect { item ->
+                val adapterItem = item.sortedBy { it.title }
+                itemsAdapter.submitList(adapterItem)
             }
         }
 

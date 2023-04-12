@@ -1,5 +1,6 @@
 package com.nvalenti.journalite
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        //navView.setBackgroundColor(resources.getColor(R.color.journalite_primary, null))
         observeNavBarVisibility(navView)
     }
 

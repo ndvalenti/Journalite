@@ -51,8 +51,9 @@ class TodayFragment : Fragment() {
         recyclerView.adapter = todayAdapter
 
         lifecycle.coroutineScope.launch {
-            viewModel.journalTasks().collect {
-                todayAdapter.submitList(it)
+            viewModel.journalTasks().collect { list ->
+                val adapterList = list.sortedBy { it.dueDate }
+                todayAdapter.submitList(adapterList)
             }
         }
 

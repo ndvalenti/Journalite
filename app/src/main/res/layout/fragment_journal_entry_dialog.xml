@@ -4,27 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dialog.JournalEntryDialogFragment" >
+    android:background="@color/journalite_primaryvariant"
+    android:foregroundTint="@color/journalite_onprimary"
+    tools:context=".dialog.JournalEntryDialogFragment">
 
-    <TextView
-        android:id="@+id/journalEditTitleTV"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleConstraint"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/journalEditDateTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:background="@color/journalite_primary_dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/journalEditTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:textColor="@color/journalite_light_grey"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/journalEditDateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            android:textColor="@color/journalite_light_grey"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/journalEditBodyET"
@@ -33,23 +52,54 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="10"
+        android:foregroundTint="@color/journalite_onprimary"
         android:gravity="start|bottom"
         android:hint="Journal Entry"
+        android:includeFontPadding="false"
         android:inputType="textMultiLine"
-        android:minLines="4"
         android:maxLines="7"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:minLines="1"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/journalite_onprimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/journalEditSubmitButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/journalEditTitleTV" />
+        app:layout_constraintTop_toBottomOf="@+id/titleConstraint"
+        tools:text="Sample Entry" />
 
+    <ImageButton
+        android:id="@+id/journalEditSubmitButton"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/roundcorner"
+        android:src="@drawable/baseline_send_24"
+        app:layout_constraintBottom_toBottomOf="@+id/journalEditBodyET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/journalEditBodyET" />
+    <!--
     <Button
         android:id="@+id/journalEditSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Submit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/journalEditBodyET" />
+        app:layout_constraintBottom_toBottomOf="@+id/journalEditBodyET"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@android:style/Widget.DeviceDefault.Light.ImageButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/roundcorner"
+        android:src="@drawable/baseline_send_24"
+        tools:layout_editor_absoluteX="333dp"
+        tools:layout_editor_absoluteY="38dp" />
+        -->
 </androidx.constraintlayout.widget.ConstraintLayout>

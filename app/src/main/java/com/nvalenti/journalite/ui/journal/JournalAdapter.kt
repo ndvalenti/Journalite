@@ -13,7 +13,6 @@ class JournalAdapter : ListAdapter<JournalEntry, JournalAdapter.ViewHolder>(Diff
     inner class ViewHolder(private var binding: JournalRowBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(entry: JournalEntry) {
             binding.journalTitleTV.text = entry.title
-            binding.journalDateTV.text = entry.entryDate.toString()
             binding.journalBodyTV.text = entry.entry
         }
     }

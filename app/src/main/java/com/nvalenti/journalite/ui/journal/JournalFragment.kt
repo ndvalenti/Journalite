@@ -48,8 +48,9 @@ class JournalFragment : Fragment() {
         recyclerView.adapter = journalAdapter
 
         lifecycle.coroutineScope.launch {
-            viewModel.journalEntries().collect {
-                journalAdapter.submitList(it)
+            viewModel.journalEntries().collect { entry ->
+                val adapterList = entry.sortedBy { it.dueDate }
+                journalAdapter.submitList(adapterList)
             }
         }
     }
