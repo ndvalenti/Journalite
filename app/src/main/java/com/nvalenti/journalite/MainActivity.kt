@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,6 +18,12 @@ import com.nvalenti.journalite.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModelFactory(
+            (application as JournalApplication).database.journalDao()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +45,18 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         //navView.setBackgroundColor(resources.getColor(R.color.journalite_primary, null))
         observeNavBarVisibility(navView)
+
+        val itemBadge = navView.getOrCreateBadge(R.id.navigation_today)
+
+        val badgeObserver = Observer<Int> { items ->
+            if (items > 0) {
+                itemBadge.isVisible = true
+                itemBadge.number = items
+            } else {
+                itemBadge.isVisible = false
+            }
+        }
+        viewModel.waitingItems.observe(this, badgeObserver)
     }
 
     private fun observeNavBarVisibility(navView: BottomNavigationView) {

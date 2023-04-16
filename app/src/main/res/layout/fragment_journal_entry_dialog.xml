@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/journalite_primaryvariant"
+    android:background="@color/journalite_primary_dark"
     android:foregroundTint="@color/journalite_onprimary"
-    tools:context=".dialog.JournalEntryDialogFragment">
+    tools:context=".ui.dialog.JournalEntryDialogFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/titleConstraint"
@@ -21,7 +21,7 @@
             android:id="@+id/journalEditTitleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="TextView"
@@ -57,7 +57,7 @@
         android:ems="10"
         android:foregroundTint="@color/journalite_onprimary"
         android:gravity="start|bottom"
-        android:hint="Journal Entry"
+        android:hint="@string/journal_entry"
         android:includeFontPadding="false"
         android:inputType="textMultiLine"
         android:maxLines="7"

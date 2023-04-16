@@ -15,7 +15,7 @@ import java.util.UUID
 data class JournalEntry(
     @PrimaryKey var id: UUID,
     @ColumnInfo(name="item_id") var itemId: UUID,
-    @ColumnInfo(name="due_date") var dueDate: LocalDateTime?,
+    @ColumnInfo(name="due_date") var dueDate: LocalDateTime,
     var title: String?
 ) {
     @ColumnInfo(name="entry_date") var entryDate: LocalDateTime? = null

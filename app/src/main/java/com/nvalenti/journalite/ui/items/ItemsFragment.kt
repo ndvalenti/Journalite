@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nvalenti.journalite.JournalApplication
 import com.nvalenti.journalite.MainViewModel
 import com.nvalenti.journalite.MainViewModelFactory
+import com.nvalenti.journalite.R
+import com.nvalenti.journalite.controller.JournalItem
 import com.nvalenti.journalite.databinding.FragmentItemsBinding
 import kotlinx.coroutines.launch
 import java.util.*
@@ -39,6 +41,7 @@ class ItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         MainViewModel.navBarVisible.value = true
+        deletionString = requireContext().getString(R.string.new_item_title)
 
         recyclerView = binding.itemsRV
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -49,7 +52,12 @@ class ItemsFragment : Fragment() {
         lifecycle.coroutineScope.launch {
             viewModel.journalItems().collect { item ->
                 val adapterItem = item.sortedBy { it.title }
-                itemsAdapter.submitList(adapterItem)
+                if (adapterItem.isNotEmpty()) {
+                    _binding?.let{ it.itemsHeaderCL.visibility = View.VISIBLE }
+                    itemsAdapter.submitList(adapterItem)
+                } else {
+                    _binding?.let{ it.itemsHeaderCL.visibility = View.GONE }
+                }
             }
         }
 
@@ -62,5 +70,9 @@ class ItemsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        var deletionString: String? = null
     }
 }

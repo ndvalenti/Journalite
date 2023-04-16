@@ -72,6 +72,9 @@ interface JournalDao {
     @Delete
     fun deleteItem(item: JournalItem)
 
+    @Query("DELETE FROM journal_task WHERE item_id=:itemId")
+    fun deleteTasksByItemId(itemId: UUID)
+
     @Delete
     fun deleteTask(task: JournalTask)
 

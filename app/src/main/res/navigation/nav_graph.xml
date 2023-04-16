@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/navigation_item_detail"
         android:name="com.nvalenti.journalite.ui.items.ItemDetailFragment"
-        android:label="Add Journal Item"
+        android:label="Set Journal Item"
         tools:layout="@layout/fragment_item_detail">
         <argument
             android:name="uuid"

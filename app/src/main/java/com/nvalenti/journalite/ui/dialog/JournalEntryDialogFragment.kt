@@ -1,4 +1,4 @@
-package com.nvalenti.journalite.dialog
+package com.nvalenti.journalite.ui.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -46,10 +46,11 @@ class JournalEntryDialogFragment(private val journalEntry: JournalEntry) : Botto
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.journalEditTitleTV.text = journalEntry.title
-        binding.journalEditDateTV.text = journalEntry.dueDate.toString()
+        binding.journalEditDateTV.text = journalEntry.dueDate.toLocalTime().toString()
 
         binding.journalEditBodyET.setText(journalEntry.entry)
-        binding.journalEditBodyET.setSelection(binding.journalEditBodyET.length())
+        view.requestFocusFromTouch()
+        binding.journalEditBodyET.setSelection(journalEntry.entry?.length ?: 0)
 
         binding.journalEditSubmitButton.setOnClickListener {
             journalEntry.entry = binding.journalEditBodyET.text.toString()

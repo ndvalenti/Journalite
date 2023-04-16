@@ -10,8 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nvalenti.journalite.MainViewModel
+import com.nvalenti.journalite.R
 import com.nvalenti.journalite.controller.JournalItem
 import com.nvalenti.journalite.databinding.FragmentItemDetailBinding
+import com.nvalenti.journalite.databinding.FragmentSetStringDialogBinding
+import com.nvalenti.journalite.ui.dialog.ConfirmDialog
+import com.nvalenti.journalite.ui.dialog.DataEntryDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,40 +44,69 @@ class ItemDetailFragment : Fragment() {
 
         id = args.uuid
         val itemObserver = Observer<JournalItem> { item: JournalItem? ->
-            updateUI(item ?: JournalItem(UUID.randomUUID()))
+            updateUI(item ?: JournalItem(UUID.randomUUID(), null))
         }
         viewModel.journalItem(id).observe(viewLifecycleOwner, itemObserver)
     }
 
     private fun updateUI(item: JournalItem) {
-        binding.itemDetailArchivedTB.isChecked = item.isArchived
-        binding.itemDetailNotificationSwitch.isChecked = item.isNotify
+        binding.itemDetailArchiveCB.isChecked = item.isArchived
+        binding.itemDetailNotifyCB.isChecked = item.isNotify
         item.timeDue?.let {
             binding.itemDetailTP.minute = it.minute
             binding.itemDetailTP.hour = it.hour
         }
         binding.itemDetailDayPicker.setDaysTo(item.days)
-        binding.itemDetailTitleTV.setText(item.title)
+        binding.titleContentTV.text = item.title ?: ItemsFragment.deletionString
+        binding.titleLayout.setOnClickListener {
+            showTitleDialog(item.title)
+        }
+
+        binding.itemDetailDeleteButton.setOnClickListener {
+            showConfirmDialog(item)
+        }
 
         // TODO: Change button text on context, in layout file?
-        binding.itemDetailAddButton.setOnClickListener {
-            val newJournalItem = JournalItem(id)
+        binding.itemDetailSaveButton.setOnClickListener {
+            val newJournalItem = JournalItem(id, getString(R.string.new_item_title))
 
-            newJournalItem.title = binding.itemDetailTitleTV.text.toString()
-            newJournalItem.isArchived = binding.itemDetailArchivedTB.isChecked
-            newJournalItem.isNotify = binding.itemDetailNotificationSwitch.isChecked
-            newJournalItem.timeDue = LocalTime.of(binding.itemDetailTP.hour, binding.itemDetailTP.hour)
+            newJournalItem.title = binding.titleContentTV.text.toString()
+            newJournalItem.isArchived = binding.itemDetailArchiveCB.isChecked
+            newJournalItem.isNotify = binding.itemDetailNotifyCB.isChecked
+            newJournalItem.timeDue = LocalTime.of(binding.itemDetailTP.hour, binding.itemDetailTP.minute)
             newJournalItem.days = binding.itemDetailDayPicker.days
 
             CoroutineScope(Dispatchers.IO).launch {
                 viewModel.addOrUpdateItem(newJournalItem)
+            }.invokeOnCompletion {
+                requireActivity().runOnUiThread {
+                    findNavController().popBackStack()
+                }
             }
-
-            // TODO: All of this causes all sorts of unwanted behavior, need to update previous view properly
-            findNavController().popBackStack()
-            //val action = ItemDetailFragmentDirections.actionNavigationItemDetailToMainNavigation()
-            //findNavController().navigate(action)
         }
+    }
+
+    private fun showConfirmDialog(item: JournalItem) {
+        val confirmText = getString(R.string.delete) + " " + item.title + "?"
+        val bodyText = getString(R.string.confirm_item_delete)
+        val dialog = ConfirmDialog(confirmText, bodyText) {
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.deleteItem(item)
+                viewModel.deleteTasksByItemId(item.id)
+            }.invokeOnCompletion {
+                requireActivity().runOnUiThread {
+                    findNavController().popBackStack()
+                }
+            }
+        }
+        dialog.show(childFragmentManager, "deleteConfirm")
+    }
+
+    private fun showTitleDialog(title: String?) {
+        val dialog = DataEntryDialog(title) {
+            binding.titleContentTV.text = it
+        }
+        dialog.show(childFragmentManager, "dataEntry")
     }
 
     override fun onDestroyView() {

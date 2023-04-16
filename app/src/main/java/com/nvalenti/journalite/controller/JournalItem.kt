@@ -12,11 +12,11 @@ import java.util.*
  */
 @Entity(tableName = "journal_item")
 data class JournalItem(
-    @PrimaryKey var id: UUID
-) {
+    @PrimaryKey var id: UUID,
     var title: String? = null
+) {
     var days: MutableSet<DayOfWeek> = mutableSetOf()
     @ColumnInfo(name="time_due") var timeDue: LocalTime? = null
     @ColumnInfo(name="archived") var isArchived: Boolean = false
-    @ColumnInfo(name="notify") var isNotify: Boolean = false
+    @ColumnInfo(name="notify") var isNotify: Boolean = true
 }

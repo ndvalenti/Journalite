@@ -5,13 +5,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nvalenti.journalite.*
 import com.nvalenti.journalite.controller.JournalEntry
 import com.nvalenti.journalite.controller.JournalTask
 import com.nvalenti.journalite.databinding.FragmentTodayBinding
-import com.nvalenti.journalite.dialog.JournalEntryDialogFragment
+import com.nvalenti.journalite.ui.dialog.ConfirmDialog
+import com.nvalenti.journalite.ui.dialog.JournalEntryDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +22,9 @@ import kotlinx.coroutines.launch
 class TodayFragment : Fragment() {
     private var _binding: FragmentTodayBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var staleRecyclerView: RecyclerView
+    private lateinit var currentRecyclerView: RecyclerView
+    private lateinit var doneRecyclerView: RecyclerView
 
     private val viewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(
@@ -42,24 +46,105 @@ class TodayFragment : Fragment() {
 
         MainViewModel.navBarVisible.value = true
 
-        recyclerView = binding.todayRV
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        staleRecyclerView = binding.staleRV
+        staleRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        currentRecyclerView = binding.todayRV
+        currentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        doneRecyclerView = binding.completedRV
+        doneRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val staleAdapter = TodayStaleAdapter({ task ->
+            showDeleteDialog(task)
+        }, { task ->
+            showJournalDialog(task)
+        })
+        staleRecyclerView.adapter = staleAdapter
 
         val todayAdapter = TodayAdapter { task ->
             showJournalDialog(task)
         }
-        recyclerView.adapter = todayAdapter
+        currentRecyclerView.adapter = todayAdapter
+
+        val doneAdapter = TodayAdapter(true) { task ->
+            showJournalDialog(task)
+        }
+        doneRecyclerView.adapter = doneAdapter
 
         lifecycle.coroutineScope.launch {
-            viewModel.journalTasks().collect { list ->
-                val adapterList = list.sortedBy { it.dueDate }
+            viewModel.journalTasks().collect { tasks ->
+                val adapterList = tasks.filter { !it.isStale && !it.hasEntry }.sortedBy { it.dueDate }
+                val staleList = tasks.filter { it.isStale }.sortedBy { it.dueDate }
+                val doneList = tasks.filter { it.hasEntry }.sortedBy { it.dueDate }
                 todayAdapter.submitList(adapterList)
+                staleAdapter.submitList(staleList)
+                doneAdapter.submitList(doneList)
+
+                viewModel.waitingItems.value = adapterList.size + staleList.size
+
+                if (adapterList.isNotEmpty()) {
+                    _binding?.let{ it.todayEventCL.visibility = View.VISIBLE }
+                } else {
+                    _binding?.let{ it.todayEventCL.visibility = View.GONE }
+                }
+
+                if (staleList.isNotEmpty()) {
+                    _binding?.let{ it.staleEventCL.visibility = View.VISIBLE }
+                } else {
+                    _binding?.let{ it.staleEventCL.visibility = View.GONE }
+                }
+
+                if (doneList.isNotEmpty()) {
+                    _binding?.let{ it.completedEventCL.visibility = View.VISIBLE }
+                } else {
+                    _binding?.let{ it.completedEventCL.visibility = View.GONE }
+                }
+            }
+        }
+
+        binding.todayEventCL.setOnClickListener {
+            if (binding.todayRV.visibility == View.VISIBLE) {
+                binding.todayRV.visibility = View.GONE
+                binding.todayEventCL.setBackgroundResource(R.drawable.rounded_top_switch_all)
+            } else {
+                binding.todayRV.visibility = View.VISIBLE
+                binding.todayEventCL.setBackgroundResource(R.drawable.rounded_top)
+            }
+        }
+        binding.completedEventCL.setOnClickListener {
+            if (binding.completedRV.visibility == View.VISIBLE) {
+                binding.completedRV.visibility = View.GONE
+                binding.completedEventCL.setBackgroundResource(R.drawable.rounded_top_switch_all)
+            } else {
+                binding.completedRV.visibility = View.VISIBLE
+                binding.completedEventCL.setBackgroundResource(R.drawable.rounded_top)
+            }
+        }
+        binding.staleEventCL.setOnClickListener {
+            if (binding.staleRV.visibility == View.VISIBLE) {
+                binding.staleRV.visibility = View.GONE
+                binding.staleEventCL.setBackgroundResource(R.drawable.rounded_top_switch_all)
+            } else {
+                binding.staleRV.visibility = View.VISIBLE
+                binding.staleEventCL.setBackgroundResource(R.drawable.rounded_top)
             }
         }
 
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.updateTasks()
         }
+    }
+
+    private fun showDeleteDialog(task: JournalTask) {
+        val confirmText = getString(R.string.delete) + " " + task.title + "?"
+        val bodyText = getString(R.string.confirm_task_delete)
+        val dialog = ConfirmDialog(confirmText, bodyText) {
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.deleteTask(task)
+            }
+        }
+        dialog.show(childFragmentManager, "deleteConfirm")
     }
 
     private fun showJournalDialog(task: JournalTask) {

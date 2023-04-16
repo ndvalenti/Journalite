@@ -19,10 +19,17 @@ import java.util.*
 class MainViewModel(private val dao: JournalDao): ViewModel() {
     private var journalMetaData = JournalMetaData()
 
+    val waitingItems: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
+
     fun journalTasks(): Flow<List<JournalTask>> = dao.getTasks()
     fun journalEntries(): Flow<List<JournalEntry>> = dao.getEntries()
     fun journalItems(): Flow<List<JournalItem>> = dao.getItems()
     fun journalItem(id: UUID): LiveData<JournalItem> = dao.journalItem(id)
+    fun deleteItem(item: JournalItem) = dao.deleteItem(item)
+    fun deleteTask(task: JournalTask) = dao.deleteTask(task)
+    fun deleteTasksByItemId(itemID: UUID) = dao.deleteTasksByItemId(itemID)
     fun getEntrySnapshotById(id: UUID): JournalEntry? = dao.getEntryById(id).firstOrNull()
     fun getTaskByEntryId(entryId: UUID): JournalTask? = dao.getTasksByEntryId(entryId).firstOrNull()
 
@@ -58,6 +65,7 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
             }
             val entries = dao.getEntrySnapshot()
             val regenEntries = entries.filter { it.itemId == item.id }
+            waitingItems.postValue(tasks.filter { !it.hasEntry }.size)
 
             regenTasks.forEach { task ->
                 task.title = item.title
@@ -72,6 +80,7 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
                 dao.insertOrUpdateItem(item)
             }
         }
+        updateTasks()
     }
 
     fun addOrUpdateEntry(entry: JournalEntry) {
