@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_map"
+    app:startDestination="@id/main_navigation">
+
+    <navigation android:id="@+id/main_navigation"
+        app:startDestination="@id/navigation_today">
+        <fragment
+            android:id="@+id/navigation_today"
+            android:name="com.nvalenti.journalite.ui.today.TodayFragment"
+            android:label="@string/title_today"
+            tools:layout="@layout/fragment_today" />
+        <fragment
+            android:id="@+id/navigation_journal"
+            android:name="com.nvalenti.journalite.ui.journal.JournalFragment"
+            android:label="@string/title_journal"
+            tools:layout="@layout/fragment_journal" />
+        <fragment
+            android:id="@+id/navigation_items"
+            android:name="com.nvalenti.journalite.ui.items.ItemsFragment"
+            android:label="@string/title_items"
+            tools:layout="@layout/fragment_items" />
+        <action
+            android:id="@+id/action_global_itemDetailFragment"
+            app:destination="@id/navigation_item_detail" />
+    </navigation>
+    <fragment
+        android:id="@+id/navigation_item_detail"
+        android:name="com.nvalenti.journalite.ui.items.ItemDetailFragment"
+        android:label="Set Journal Item"
+        tools:layout="@layout/fragment_item_detail">
+        <argument
+            android:name="uuid"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/action_navigation_item_detail_to_main_navigation"
+            app:destination="@id/main_navigation" />
+    </fragment>
+</navigation>

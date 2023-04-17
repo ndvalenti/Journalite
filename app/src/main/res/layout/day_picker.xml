@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ToggleButton
+        android:id="@+id/monday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/mo"
+        android:textOff="@string/mo"
+        android:textOn="@string/mo" />
+
+    <ToggleButton
+        android:id="@+id/tuesday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/tu"
+        android:textOff="@string/tu"
+        android:textOn="@string/tu" />
+
+    <ToggleButton
+        android:id="@+id/wednesday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/we"
+        android:textOff="@string/we"
+        android:textOn="@string/we" />
+
+    <ToggleButton
+        android:id="@+id/thursday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/th"
+        android:textOff="@string/th"
+        android:textOn="@string/th" />
+
+    <ToggleButton
+        android:id="@+id/friday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/fr"
+        android:textOff="@string/fr"
+        android:textOn="@string/fr" />
+
+    <ToggleButton
+        android:id="@+id/saturday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/sa"
+        android:textOff="@string/sa"
+        android:textOn="@string/sa" />
+
+    <ToggleButton
+        android:id="@+id/sunday"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/day_button"
+        android:textColor="@color/journalite_light_grey"
+        app:layout_constraintDimensionRatio="1:1"
+        android:text="@string/su"
+        android:textOff="@string/su"
+        android:textOn="@string/su" />
+</merge>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/setStringTitleLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/item_label"
+        android:textColor="@color/journalite_onprimary"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/setStringContentET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/journalite_light_grey"
+        android:ems="10"
+        android:hint="@string/new_item_title"
+        android:inputType="textPersonName"
+        android:textColor="@color/journalite_onprimary"
+        android:textColorHint="@color/journalite_light_grey_translucent"
+        android:autofillHints="name" />
+
+</LinearLayout>
