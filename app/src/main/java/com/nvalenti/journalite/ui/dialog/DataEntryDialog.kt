@@ -21,12 +21,12 @@ class DataEntryDialog(private var itemLabel: String?, val dialogSuccess: (String
 
         return AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme)
             .setView(binding.root)
-            .setPositiveButton(R.string.save) { dialog, id ->
+            .setPositiveButton(R.string.save) { _, _ ->
                 //listener.onDialogPositiveClick(inputView.text.toString())
                 dialogSuccess(binding.setStringContentET.text.toString())
             }
-            .setNegativeButton(R.string.cancel) { dialog, id ->
-                getDialog()?.cancel()
+            .setNegativeButton(R.string.cancel) { _, _ ->
+                dialog?.cancel()
             }
             .create()
     }

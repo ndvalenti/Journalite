@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.nvalenti.journalite.R
@@ -22,11 +21,11 @@ class ConfirmDialog(private val confirmText: String, private val bodyText: Strin
 
         return AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme)
             .setView(binding.root)
-            .setPositiveButton(R.string.delete) { dialog, id ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 dialogSuccess()
             }
-            .setNegativeButton(R.string.cancel) { dialog, id ->
-                getDialog()?.cancel()
+            .setNegativeButton(R.string.cancel) { _, _ ->
+                dialog?.cancel()
             }
             .create()
     }
