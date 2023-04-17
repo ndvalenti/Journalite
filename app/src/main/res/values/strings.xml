@@ -31,4 +31,12 @@
     <string name="todays_items">Today\'s Items</string>
     <string name="completed_items">Completed Items</string>
     <string name="confirm_task_delete">Are you sure you want to permanently delete this Task?</string>
+    <string name="channel_name">JOURNALITE_NOTIF_CHANNEL</string>
+    <string name="channel_description">Journalite Notification Channel</string>
+    <string name="channel_id">Journalite</string>
+    <string name="hint_add_item">Add an item to get started</string>
+    <string name="hint_add_task">No active tasks\n Tasks are added from Items</string>
+    <string name="hint_add_entry">You have no journal entries yet</string>
+    <string name="row_deletion">Row Deletion</string>
+    <string name="add_a_new_item">Add a new item</string>
 </resources>

@@ -5,7 +5,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nvalenti.journalite.*
@@ -99,6 +98,12 @@ class TodayFragment : Fragment() {
                     _binding?.let{ it.completedEventCL.visibility = View.VISIBLE }
                 } else {
                     _binding?.let{ it.completedEventCL.visibility = View.GONE }
+                }
+
+                if (adapterList.isNotEmpty() || staleList.isNotEmpty() || doneList.isNotEmpty()) {
+                    _binding?.let{ it.todayEmptyHintTV.visibility = View.GONE }
+                } else {
+                    _binding?.let { it.todayEmptyHintTV.visibility = View.VISIBLE }
                 }
             }
         }

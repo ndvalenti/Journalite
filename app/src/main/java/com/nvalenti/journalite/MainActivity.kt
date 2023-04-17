@@ -1,19 +1,20 @@
 package com.nvalenti.journalite
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.nvalenti.journalite.controller.NotificationWorker
 import com.nvalenti.journalite.databinding.ActivityMainBinding
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -43,7 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        //navView.setBackgroundColor(resources.getColor(R.color.journalite_primary, null))
         observeNavBarVisibility(navView)
 
         val itemBadge = navView.getOrCreateBadge(R.id.navigation_today)
@@ -57,6 +57,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewModel.waitingItems.observe(this, badgeObserver)
+        viewModel.createWorkRequest = { message, timeDelayInMinutes ->
+            createWorkRequest(message, timeDelayInMinutes)
+        }
+    }
+
+    private fun createWorkRequest(message: String, timeDelayInMinutes: Long) {
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(timeDelayInMinutes, TimeUnit.MINUTES)
+            .setInputData(workDataOf(
+                "title" to "Journalite",
+                "message" to message
+            ))
+            .build()
+        WorkManager.getInstance(this).enqueue(workRequest)
     }
 
     private fun observeNavBarVisibility(navView: BottomNavigationView) {

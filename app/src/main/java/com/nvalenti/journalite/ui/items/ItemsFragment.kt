@@ -12,8 +12,9 @@ import com.nvalenti.journalite.JournalApplication
 import com.nvalenti.journalite.MainViewModel
 import com.nvalenti.journalite.MainViewModelFactory
 import com.nvalenti.journalite.R
-import com.nvalenti.journalite.controller.JournalItem
 import com.nvalenti.journalite.databinding.FragmentItemsBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -46,17 +47,25 @@ class ItemsFragment : Fragment() {
         recyclerView = binding.itemsRV
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val itemsAdapter = ItemsAdapter()
+        val itemsAdapter = ItemsAdapter { id, state ->
+            updateNotifyState(id, state)
+        }
         recyclerView.adapter = itemsAdapter
 
         lifecycle.coroutineScope.launch {
             viewModel.journalItems().collect { item ->
                 val adapterItem = item.sortedBy { it.title }
                 if (adapterItem.isNotEmpty()) {
-                    _binding?.let{ it.itemsHeaderCL.visibility = View.VISIBLE }
+                    _binding?.let{
+                        it.itemsEmptyHintTV.visibility = View.GONE
+                        it.itemsHeaderCL.visibility = View.VISIBLE
+                    }
                     itemsAdapter.submitList(adapterItem)
                 } else {
-                    _binding?.let{ it.itemsHeaderCL.visibility = View.GONE }
+                    _binding?.let {
+                        it.itemsEmptyHintTV.visibility = View.VISIBLE
+                        it.itemsHeaderCL.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -64,6 +73,12 @@ class ItemsFragment : Fragment() {
         binding.itemsAddFAB.setOnClickListener {
             val action = ItemsFragmentDirections.actionGlobalItemDetailFragment(UUID.randomUUID())
             findNavController().navigate(action)
+        }
+    }
+
+    private fun updateNotifyState(id: UUID, state: Boolean) {
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.setItemNotifyState(id, state)
         }
     }
 

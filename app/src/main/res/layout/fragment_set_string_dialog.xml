@@ -27,6 +27,7 @@
         android:hint="@string/new_item_title"
         android:inputType="textPersonName"
         android:textColor="@color/journalite_onprimary"
-        android:textColorHint="@color/journalite_light_grey" />
+        android:textColorHint="@color/journalite_light_grey_translucent"
+        android:autofillHints="name" />
 
 </LinearLayout>

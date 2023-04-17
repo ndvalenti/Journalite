@@ -80,4 +80,7 @@ interface JournalDao {
 
     @Delete
     fun deleteTasks(tasks: List<JournalTask>)
+
+    @Query("UPDATE journal_item SET notify=:state WHERE id=:id")
+    fun setItemNotifyState(id: UUID, state: Boolean)
 }

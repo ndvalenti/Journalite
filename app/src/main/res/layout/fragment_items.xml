@@ -8,6 +8,23 @@
     android:paddingBottom="?attr/actionBarSize"
     tools:context=".ui.items.ItemsFragment">
 
+    <TextView
+        android:id="@+id/itemsEmptyHintTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/hint_add_item"
+        android:textAlignment="center"
+        android:textColor="@color/journalite_light_grey_translucent"
+        android:textSize="30sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemsHeaderCL"
         android:layout_width="match_parent"
@@ -16,6 +33,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_top"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -76,6 +94,7 @@
         app:backgroundTint="@color/journalite_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/add_a_new_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

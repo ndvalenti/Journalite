@@ -1,6 +1,9 @@
 package com.nvalenti.journalite.ui.items
 
+import android.graphics.Rect
 import android.view.LayoutInflater
+import android.view.TouchDelegate
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -8,12 +11,29 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nvalenti.journalite.controller.JournalItem
 import com.nvalenti.journalite.databinding.ItemsRowBinding
+import java.util.*
 
-class ItemsAdapter : ListAdapter<JournalItem, ItemsAdapter.ViewHolder>(DiffCallback) {
+class ItemsAdapter(private val itemNotifyState: (itemId: UUID, state: Boolean) -> Unit) : ListAdapter<JournalItem, ItemsAdapter.ViewHolder>(DiffCallback) {
     inner class ViewHolder(private var binding: ItemsRowBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: JournalItem) {
             binding.itemTitleTV.text = item.title
-            binding.itemNotificationSwitch.isChecked = item.isNotify
+            //binding.itemNotificationSwitch.isChecked = item.isNotify
+            binding.itemNotificationButton.isChecked = item.isNotify
+            val delegateArea = Rect()
+            binding.itemNotificationButton.apply {
+                isEnabled = true
+                getHitRect(delegateArea)
+            }
+            delegateArea.right += 20
+            delegateArea.left += 20
+            delegateArea.top += 17
+            delegateArea.bottom += 17
+            (binding.itemNotificationButton.parent as? View)?.apply {
+                touchDelegate = TouchDelegate(delegateArea, binding.itemNotificationButton)
+            }
+            binding.itemNotificationButton.setOnClickListener {
+                itemNotifyState(item.id, binding.itemNotificationButton.isChecked)
+            }
         }
     }
 

@@ -27,5 +27,6 @@
     <color name="journalite_red">#FFAD6767</color>
     <color name="journalite_dark_grey">#FF555555</color>
     <color name="journalite_light_grey">#FFDCDCDC</color>
+    <color name="journalite_light_grey_translucent">#99DCDCDC</color>
     <color name="journalite_blue">#FF007AFF</color>
 </resources>

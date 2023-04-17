@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <declare-styleable name="DayPicker">
         <attr name="monday" format="boolean" />
         <attr name="tuesday" format="boolean" />
@@ -10,5 +9,4 @@
         <attr name="saturday" format="boolean" />
         <attr name="sunday" format="boolean" />
     </declare-styleable>
-
 </resources>

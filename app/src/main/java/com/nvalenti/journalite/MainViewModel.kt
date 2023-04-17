@@ -10,10 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.time.Duration
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.*
 import java.util.*
 
 class MainViewModel(private val dao: JournalDao): ViewModel() {
@@ -23,10 +20,13 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
         MutableLiveData<Int>()
     }
 
+    var createWorkRequest: (String, Long) -> (Unit) = {_,_-> }
+
     fun journalTasks(): Flow<List<JournalTask>> = dao.getTasks()
     fun journalEntries(): Flow<List<JournalEntry>> = dao.getEntries()
     fun journalItems(): Flow<List<JournalItem>> = dao.getItems()
     fun journalItem(id: UUID): LiveData<JournalItem> = dao.journalItem(id)
+    fun setItemNotifyState(id: UUID, state: Boolean) = dao.setItemNotifyState(id, state)
     fun deleteItem(item: JournalItem) = dao.deleteItem(item)
     fun deleteTask(task: JournalTask) = dao.deleteTask(task)
     fun deleteTasksByItemId(itemID: UUID) = dao.deleteTasksByItemId(itemID)
@@ -41,6 +41,8 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
             flagCheckRequireTaskUpdate()
             CoroutineScope(Dispatchers.IO).launch {
                 dao.insertOrUpdateItem(item)
+            }.invokeOnCompletion {
+                updateTasks()
             }
         } else {
             /* If we are updating an existing item we need to ensure the following is completed:
@@ -78,9 +80,10 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
                 dao.updateTasks(regenTasks)
                 dao.updateEntries(regenEntries)
                 dao.insertOrUpdateItem(item)
+            }.invokeOnCompletion {
+                updateTasks()
             }
         }
-        updateTasks()
     }
 
     fun addOrUpdateEntry(entry: JournalEntry) {
@@ -187,7 +190,6 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
         val updateList = mutableListOf<JournalTask>()
         val tasks = dao.getTaskSnapshot()
 
-        //_journalTasks.filter { it.dueDate < staleTime }.forEach { task ->
         tasks.filter { it.dueDate < staleTime }.forEach { task ->
             if (task.hasEntry) {
                 removeList.add(task)
@@ -195,6 +197,11 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
                 task.isStale = true
                 updateList.add(task)
             }
+        }
+
+        tasks.filter { it.dueDate > LocalDateTime.now().plusMinutes(5) }.forEach { task ->
+            val minutesToDue = Duration.between(LocalDateTime.now(), task.dueDate).toMinutes()
+            createWorkRequest(task.title ?: "", minutesToDue)
         }
 
         CoroutineScope(Dispatchers.IO).launch {

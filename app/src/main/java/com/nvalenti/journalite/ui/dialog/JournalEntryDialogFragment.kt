@@ -59,6 +59,7 @@ class JournalEntryDialogFragment(private val journalEntry: JournalEntry) : Botto
                 viewModel.addOrUpdateEntry(journalEntry)
                 viewModel.getTaskByEntryId(journalEntry.id)?.let { task ->
                     task.hasEntry = true
+                    task.isStale = false
                     viewModel.addOrUpdateTask(task)
                 }
             }.invokeOnCompletion {
