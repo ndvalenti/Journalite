@@ -33,7 +33,6 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
     fun getEntrySnapshotById(id: UUID): JournalEntry? = dao.getEntryById(id).firstOrNull()
     fun getTaskByEntryId(entryId: UUID): JournalTask? = dao.getTasksByEntryId(entryId).firstOrNull()
 
-
     fun addOrUpdateItem(item: JournalItem) {
         val items = dao.getItemSnapshot()
         val itemToUpdate = items.firstOrNull { it.id == item.id }
@@ -199,7 +198,7 @@ class MainViewModel(private val dao: JournalDao): ViewModel() {
             }
         }
 
-        tasks.filter { it.dueDate > LocalDateTime.now().plusMinutes(5) }.forEach { task ->
+        tasks.filter { it.dueDate > LocalDateTime.now().plusHours(1) }.forEach { task ->
             val minutesToDue = Duration.between(LocalDateTime.now(), task.dueDate).toMinutes()
             createWorkRequest(task.title ?: "", minutesToDue)
         }

@@ -39,4 +39,5 @@
     <string name="hint_add_entry">You have no journal entries yet</string>
     <string name="row_deletion">Row Deletion</string>
     <string name="add_a_new_item">Add a new item</string>
+    <string name="submit">Submit</string>
 </resources>
