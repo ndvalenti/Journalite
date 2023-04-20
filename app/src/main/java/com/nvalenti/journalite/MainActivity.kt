@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.nvalenti.journalite.controller.JournalEntry
 import com.nvalenti.journalite.controller.NotificationWorker
 import com.nvalenti.journalite.databinding.ActivityMainBinding
 import java.util.concurrent.TimeUnit

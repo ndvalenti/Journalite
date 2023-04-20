@@ -11,7 +11,7 @@
     <color name="journalite_primary">#FF121212</color>
     <color name="journalite_primaryvariant">#FF707070</color>
     <color name="journalite_onprimary">#FFFFFFFF</color>
-    <color name="journalite_secondary">#FF007AFF</color>
+    <color name="journalite_secondary">#FF007ADD</color>
     <color name="journalite_secondaryvariant">#FF001A41</color>
     <color name="journalite_onsecondary">#FFFFFFFF</color>
     <color name="journalite_statusbarcolor">#FF121212</color>
@@ -19,7 +19,7 @@
     <color name="journalite_primary_dark">#FF070707</color>
     <color name="journalite_primaryvariant_dark">#FF121212</color>
     <color name="journalite_onprimary_dark">#FFFFFFFF</color>
-    <color name="journalite_secondary_dark">#FF007AFF</color>
+    <color name="journalite_secondary_dark">#FF007ADD</color>
     <color name="journalite_secondaryvariant_dark">#FF001A41</color>
     <color name="journalite_onsecondary_dark">#FFFFFFFF</color>
     <color name="journalite_statusbarcolor_dark">#FF121212</color>
@@ -28,5 +28,5 @@
     <color name="journalite_dark_grey">#FF555555</color>
     <color name="journalite_light_grey">#FFDCDCDC</color>
     <color name="journalite_light_grey_translucent">#99DCDCDC</color>
-    <color name="journalite_blue">#FF007AFF</color>
+    <color name="journalite_blue">#FF007ADD</color>
 </resources>

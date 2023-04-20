@@ -12,7 +12,7 @@
         android:id="@+id/titleConstraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/journalite_primary_dark"
+        android:background="@drawable/rounded_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,25 +24,25 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
             android:textColor="@color/journalite_light_grey"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/journalEditDateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="TextView"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/journalite_light_grey"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Date" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
@@ -56,11 +56,13 @@
         android:background="@drawable/rounded_edittext"
         android:ems="10"
         android:foregroundTint="@color/journalite_onprimary"
-        android:gravity="start|bottom"
+        android:gravity="start|center_vertical"
         android:hint="@string/journal_entry"
+        android:importantForAutofill="no"
         android:includeFontPadding="false"
         android:inputType="textMultiLine"
         android:maxLines="7"
+        android:minHeight="48dp"
         android:minLines="1"
         android:paddingHorizontal="12dp"
         android:paddingVertical="8dp"
@@ -74,14 +76,15 @@
 
     <ImageButton
         android:id="@+id/journalEditSubmitButton"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/roundcorner"
         android:src="@drawable/baseline_send_24"
         app:layout_constraintBottom_toBottomOf="@+id/journalEditBodyET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/journalEditBodyET" />
+        app:layout_constraintTop_toTopOf="@+id/journalEditBodyET"
+        android:contentDescription="@string/submit" />
     <!--
     <Button
         android:id="@+id/journalEditSubmitButton"

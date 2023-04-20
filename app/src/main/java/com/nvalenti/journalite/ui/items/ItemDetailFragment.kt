@@ -43,6 +43,9 @@ class ItemDetailFragment : Fragment() {
         MainViewModel.navBarVisible.value = false
 
         id = args.uuid
+
+        binding.itemDetailTP.setIs24HourView(true)
+
         val itemObserver = Observer<JournalItem> { item: JournalItem? ->
             updateUI(item ?: JournalItem(UUID.randomUUID(), null))
         }
